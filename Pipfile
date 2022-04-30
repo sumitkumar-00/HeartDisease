@@ -6,6 +6,13 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+sklearn = "*"
+pandas = "*"
+matplotlib = "*"
+imblearn = "*"
+flask = "*"
+seaborn = "*"
+xgboost = "*"
 
 [requires]
 python_version = "3.8"
