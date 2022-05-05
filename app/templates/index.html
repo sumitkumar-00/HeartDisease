@@ -1,0 +1,270 @@
+{% extends 'template.html' %}
+
+{% block index  %}
+
+<div class="container">
+  <div class="row">
+    <p>
+      According to the CDC, heart disease is one of the leading causes of death for people of most races in the US (African Americans, American Indians and Alaska Natives, and white people). About half of all Americans (47%) have at least 1 of 3 key risk factors for heart disease: high blood pressure, high cholesterol, and smoking. Other key indicator include diabetic status, obesity (high BMI), not getting enough physical activity or drinking too much alcohol. Detecting and preventing the factors that have the greatest impact on heart disease is very important in healthcare. Computational developments, in turn, allow the application of machine learning methods to detect "patterns" from the data that can predict a patient's condition.
+      This data was downloaded from <a href="https://www.kaggle.com/datasets/kamilpytlak/personal-key-indicators-of-heart-disease">Kaggle</a>.
+    </p>
+    <p>
+        Originally, the dataset come from the CDC and is a major part of the Behavioral Risk Factor Surveillance System (BRFSS), which conducts annual telephone surveys to gather data on the health status of U.S. residents. As the CDC describes: "Established in 1984 with 15 states, BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year, making it the largest continuously conducted health survey system in the world.". The most recent dataset (as of February 15, 2022) includes data from 2020. It consists of 401,958 rows and 279 columns. The vast majority of columns are questions asked to respondents about their health status, such as "Do you have serious difficulty walking or climbing stairs?" or "Have you smoked at least 100 cigarettes in your entire life? [Note: 5 packs = 100 cigarettes]"
+    </p>
+
+    <p> Here are the columns included in the dataset</p>
+  </div>
+  <div class="row">
+    <ol>
+      <li>HeartDisease: Respondents that have ever reported having coronary heart disease (CHD) or myocardial infarction (MI)</li>
+      <li>BMI: Body Mass Index</li>
+      <li>Smoking: Have you smoked at least 100 cigarettes in your entire life? [Note: 5 packs = 100 cigarettes]</li>
+      <li>AlcoholDrinking: Heavy drinkers (adult men having more than 14 drinks per week and adult women having more than 7 drinks per week</li>
+      <li>Stroke: (Ever told) (you had) a stroke?</li>
+      <li>PhysicalHealth: Now thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your physical health not good? (0-30 days)</li>
+      <li>MentalHealth: Thinking about your mental health, for how many days during the past 30 days was your mental health not good? (0-30 days)</li>
+      <li>DiffWalking: Do you have serious difficulty walking or climbing stairs?</li>
+      <li>Sex: Are you male or female?</li>
+      <li>AgeCategory: Fourteen-level age category</li>
+      <li>Race: American Indian/ Alaskan Native, Asian / Black / White / Other</li>
+      <li>Diabetic: Yes, No, Pre-Diabetic, Yes (During Pregnancy)</li>
+      <li>PhysicalActivity: Yes / No</li>
+      <li>GeneralHealth: Excellent / Very Good / Good / Fair / Poor </li>
+      <li>SleepTime</li>
+      <li>Asthma: Yes / No</li>
+      <li>KidneyDisease: Yes / No</li>
+      <li>SkinCancer: Yes / No</li>
+    </ol>
+  </div>
+</div>
+
+<div class="container">
+  <form action="/predict" method="post">
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="smoking">Smoking</label>
+          </div>
+          <select class="custom-select" id="smoking" name="Smoking">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="alcoholdrinking">Alcohol Drinking</label>
+          </div>
+          <select class="custom-select" id="alcoholdrinking" name="AlcoholDrinking">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="stroke">Stroke</label>
+          </div>
+          <select class="custom-select" id="stroke" name="Stroke">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="diffwalking">Difficulty Walking</label>
+          </div>
+          <select class="custom-select" id="diffwalking" name="DiffWalking">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row align-item-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="sex">Sex</label>
+          </div>
+          <select class="custom-select" id="sex" name="Sex">
+              <option selected>Choose...</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="Asthma">Asthma</label>
+          </div>
+          <select class="custom-select" id="Asthma" name="Asthma">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="KidneyDisease">Kidney Disease</label>
+          </div>
+          <select class="custom-select" id="KidneyDisease" name="KidneyDisease">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="SkinCancer">Skin Cancer</label>
+          </div>
+          <select class="custom-select" id="SkinCancer" name="SkinCancer">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row align-item-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="Race">Race</label>
+          </div>
+          <select class="custom-select" id="Race" name="Race">
+              <option selected>Choose...</option>
+              <option value="American Indian/Alaskan Native">American Indian/Alaskan Native</option>
+              <option value="Asian">Asian</option>
+              <option value="Black">Black</option>
+              <option value="Hispanic">Hispanic</option>
+              <option value="Other">Other</option>
+              <option value="White">White</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="Diabetic">Diabetic</label>
+          </div>
+          <select class="custom-select" id="Diabetic" name="Diabetic">
+              <option selected>Choose...</option>
+              <option value="No, borderline diabetes">No, borderline diabetes</option>
+              <option value="No">No</option>
+              <option value="Yes (during pregnancy)">Yes (during pregnancy)</option>
+              <option value="Yes">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="PhysicalActivity">Physical Activity</label>
+          </div>
+          <select class="custom-select" id="PhysicalActivity" name="PhysicalActivity">
+              <option selected>Choose...</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row align-item-start">
+      <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="GenHealth">General Health</label>
+          </div>
+          <select class="custom-select" id="GenHealth" name="GenHealth">
+              <option selected>Choose...</option>
+              <option value="Excellent">Excellent</option>
+              <option value="Fair">Fair</option>
+              <option value="Good">Good</option>
+              <option value="Poor">Poor</option>
+              <option value="Very good">Very good</option>
+          </select>
+        </div>
+      </div>
+    <div class="col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="AgeCategory">Age Category</label>
+          </div>
+          <select class="custom-select" id="AgeCategory" name="AgeCategory">
+              <option selected>Choose...</option>
+              <option value="18-24">18-24</option>
+              <option value="25-29">25-29</option>
+              <option value="30-34">30-34</option>
+              <option value="35-39">35-39</option>
+              <option value="40-44">40-44</option>
+              <option value="45-49">55-49</option>
+              <option value="50-54">50-54</option>
+              <option value="55-59">55-59</option>
+              <option value="60-64">60-64</option>
+              <option value="65-69">65-69</option>
+              <option value="70-74">70-44</option>
+              <option value="75-79">75-79</option>
+              <option value="80 or older">80 or older</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row align-items-start">
+      <div class="col">
+            <label for="int_rate" class="form-label">BMI</label>
+            <input type="text" class="form-control" id="BMI" name="BMI" value=" {{ request.form['BMI'] }} ">
+      </div>
+      <div class="col">
+            <label for="installment" class="form-label">Physical Health</label>
+            <input type="text" class="form-control" id="PhysicalHealth" name="PhysicalHealth" value=" {{ request.form['PhysicalHealth'] }} ">
+      </div>
+      <div class="col">
+            <label for="log.annual.inc" class="form-label">Mental Health</label>
+            <input type="text" class="form-control" id="MentalHealth" name="MentalHealth" value=" {{ request.form['MentalHealth'] }} ">
+      </div>
+      <div class="col">
+            <label for="dti" class="form-label">Sleep Time</label>
+            <input type="text" class="form-control" id="SleepTime" name="SleepTime" value=" {{ request.form['SleepTime'] }} ">
+      </div>
+
+    </div>
+
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+      </div>
+  </form>
+  <p>
+<!--    {% for table in tables %}-->
+<!--            {{titles[loop.index]}}-->
+<!--            {{ table|safe }}-->
+<!--    {% endfor %}-->
+   {{ result }}
+  </p>
+</div>
+
+{% endblock %}
